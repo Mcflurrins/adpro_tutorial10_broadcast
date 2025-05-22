@@ -19,3 +19,23 @@ To run this code, I open four terminals first. Then I put in `cargo run --bin se
 
 ### Experiment 2.2:
 In the server, I changed the port to `TcpListener::bind("127.0.0.1:8080")`, and in the client, the connection URI I changed to `ws://127.0.0.1:8080`. The protocol is specified by the ws:// prefix in the URI, which both sides use for WebSocket communication. We just have to make sure both files already match in the port and protocol.
+
+### Experiment 2.3:
+#### Running server:
+![alt text](image-7.png)
+#### Running client 1:
+![alt text](image-6.png)
+#### Running client 2:
+![alt text](image-5.png)
+#### Running client 3:
+![alt text](image-4.png)
+
+All I did was modify this bit in client.rs: 
+ `if let Some(text) = msg.as_text() {println!("Flori's Computer - From server: {}", text);}`
+This labels every message received from the server.
+
+And I also added this bit in server.rs:
+    `loop {
+    let (socket, addr) = listener.accept().await?;
+    println!("New connection from Flori's laptop:{addr:?}");`
+Putting this inside the loop logs the address of each client connection, so it's easier to see which clients are connecting to the server. 
